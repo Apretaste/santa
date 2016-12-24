@@ -1,11 +1,13 @@
-<!-- Aqui se valida cuando se tenga el tiempo actual y compararlo con la fecha y hora que sale santa de su casa en el polo norte!-->
-{if !$intime }
-    <h1>{$message}</h1>
-    {img width="100%" src="{$image}"}
-
-{else}
-    <h1>{$message}</h1>
-    {img width="100%" src="{$image}"}
-    <!-- Aqui se valida para que salga la provincia a la que debe llegar ,segun la lat y long -->
-
-{/if}
+<h2>Qu&eacute; haces Santa?</h2>
+{space5}
+<table width="410" align="center">
+	<tr>
+		<td valign="top" align="right"><i>{$message}</i>
+		{space5}
+		<center>
+		{img src="{$image}"}
+		</center>
+		</td>
+		<td valign="top" align="left">{img src="santa.jpg"}</td>
+	</tr>
+</table>
