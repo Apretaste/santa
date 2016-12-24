@@ -90,7 +90,7 @@
     },
     {
       "hour" : 13,
-      "minutes": "0-30",
+      "minutes": "0-59",
       "name" : "Madrid",
       "country" : "Espa&ntilde;a",
       "lat" : 39.8757545,
@@ -123,7 +123,7 @@
     },
     {
       "hour" : 16,
-      "minutes": "31-59",
+      "minutes": "0-59",
       "name" : "Toronto",
       "country" : "Canad&aacute;",
       "lat" : 50.8464613,
