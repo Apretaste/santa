@@ -13,5 +13,5 @@
 </table>
 {space5}
 <center>
-{button href="SANTA" caption="Volver a saber de Santa" color="red" size="medium"}
+{button href="SANTA" caption="Saber de Santa" color="red" size="medium"}
 </center>
