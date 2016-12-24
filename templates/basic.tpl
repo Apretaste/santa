@@ -11,3 +11,7 @@
 		<td valign="top" align="left">{img src="santa.jpg"}</td>
 	</tr>
 </table>
+{space5}
+<center>
+{button href="SANTA" caption="Volver a saber de Santa" color="red" size="medium"}
+</center>
