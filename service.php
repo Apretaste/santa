@@ -140,24 +140,25 @@ class Santa extends Service
                         // optimize the png image
                         $this->utils->optimizeImage($mapImagePath, 300);
 
+						$city =  str_replace("_", " ", $stop->name);
+						
+						// generate random santa's message
+						$messages = [
+							"Le estoy dando zanahorias a Rodolfo en el techo de la casa de {$person->full_name} en la ciudad de {$city} en {$stop->country}, el pobre ha pasado hambre desde el Polo Norte!!!",								
+							"Santa est&aacute; comiendo galletas de {$stop->country}, que le dej&oacute; {$person->full_name} en la mesa de su casa en {$city}",
+							"Uff que fr&iacute;o hace aqu&iacute; arriba en {$city}. Ojal&aacute; que {$person->full_name} me haya dejado chocolate caliente de {$stop->country}!!!",
+							"Mi esposa le hizo esta bufanda especialmente a {$person->full_name}, aunque con el calor que hace en {$city} no creo que la vaya a usar mucho  :(",								
+							"Me encanta venir a {$city} porque siempre me dejan mucha comida.",
+							"Cargar este saco lleno de regalos por todo {$city} me dejar&aacute; tremendo dolor en la espalda!!!",
+							"&iquest;Dónde habr&aacute; algo de leche fr&iacute;a en {$city}?",
+							"Espero que {$person->full_name} est&eacute; durmiendo porque estoy muy gordo para salir corriendo por todo {$city}"								
+						];
+						
+						$msg_rand = $messages[mt_rand(0,count($messages)-1)];
+						
                         // santa no ha llegado
                         if ($user_pos > $i) {
                             $time_left = null;
-							$city =  str_replace("_", " ", $stop->name);
-							
-							// generate random santa's message
-							$messages = [
-								"Le estoy dando zanahorias a Rodolfo en el techo de la casa de {$person->full_name} en la ciudad de {$city} en {$stop->country}, el pobre ha pasado hambre desde el Polo Norte!!!",								
-								"Santa est&aacute; comiendo galletas de {$stop->country}, que le dej&oacute; {$person->full_name} en la mesa de su casa en {$city}",
-								"Uff que fr&iacute;o hace aqu&iacute; arriba en {$city}. Ojal&aacute; que {$person->full_name} me haya dejado chocolate caliente de {$stop->country}!!!",
-								"Mi esposa le hizo esta bufanda especialmente a {$person->full_name}, aunque con el calor que hace en {$city} no creo que la vaya a usar mucho  :(",								
-								"Me encanta venir a {$city} porque siempre me dejan mucha comida.",
-								"Cargar este saco lleno de regalos por todo {$city} me dejar&aacute; tremendo dolor en la espalda!!!",
-								"&iquest;Dónde habr&aacute; algo de leche fr&iacute;a en {$city}?",
-								"Espero que {$person->full_name} est&eacute; durmiendo porque estoy muy gordo para salir corriendo por todo {$city}"								
-							];
-					
-							$msg_rand = $messages[mt_rand(0,count($messages)-1)];
 							
                             if (!is_null($user_stop)) {
                                 $now_hour = $stop->hour;
