@@ -1,17 +1,13 @@
-<h2>Qu&eacute; haces Santa?</h2>
+<h2>&iquest;Qu&eacute; hace Santa?</h2>
+
 {space5}
-<table width="410" align="center">
-	<tr>
-		<td valign="top" align="right"><i>{$message}</i>
-		{space5}
-		<center>
-		{img src="{$image}"}
-		</center>
-		</td>
-		<td valign="top" align="left">{img src="santa.jpg"}</td>
-	</tr>
-</table>
-{space5}
+
 <center>
-{button href="SANTA" caption="Saber de Santa" color="red" size="medium"}
+	<i>{$message}</i>
+	{space5}
+	{img src="{$image}" alt="santa" width="100%"}
+
+	{space5}
+
+	{button href="SANTA" caption="Saber de Santa" color="red" size="medium"}
 </center>
