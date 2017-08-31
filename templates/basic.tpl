@@ -9,5 +9,5 @@
 
 	{space5}
 
-	{button href="SANTA" caption="Saber de Santa" color="red" size="medium"}
+	{button href="SANTA" caption="Saber de Santa" size="medium"}
 </center>
