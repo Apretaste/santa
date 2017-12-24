@@ -144,10 +144,10 @@ class Santa extends Service
 
 						// generate random santa's message
 						$messages = [
-							"Le estoy dando zanahorias a Rodolfo en el techo de la casa de {$person->full_name} en la ciudad de {$city} en {$stop->country}, el pobre ha pasado hambre desde el Polo Norte!!!",
-							"Santa est&aacute; comiendo galletas de {$stop->country}, que le dej&oacute; {$person->full_name} en la mesa de su casa en {$city}",
+							"Le estoy dando zanahorias a Rodolfo en la ciudad de {$city} en {$stop->country}, el pobre ha pasado hambre desde el Polo Norte!!!",
+							"Santa est&aacute; comiendo galletas de {$stop->country}, que le regalaron en {$city}",
 							"Uff que fr&iacute;o hace aqu&iacute; arriba en {$city}. Ojal&aacute; que {$person->full_name} me haya dejado chocolate caliente de {$stop->country}!!!",
-							"Mi esposa le hizo esta bufanda especialmente a {$person->full_name}, aunque con el calor que hace en {$city} no creo que la vaya a usar mucho  :(",
+							"Mi esposa le hizo esta bufanda especialmente a {$person->full_name}, y espero que le guste mucho. Estoy llegando a {$city}  :(",
 							"Me encanta venir a {$city} porque siempre me dejan mucha comida.",
 							"Cargar este saco lleno de regalos por todo {$city} me dejar&aacute; tremendo dolor en la espalda!!!",
 							"&iquest;Dónde habr&aacute; algo de leche fr&iacute;a en {$city}?",
