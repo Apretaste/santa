@@ -173,7 +173,7 @@ class Santa extends Service
 								$response->setResponseSubject('Santa no ha llegado a tu provincia');
 								$response->createFromTemplate('basic.tpl', array(
 									'message' => "$msg_rand. Llegar&eacute; a tu provincia en <b>$time_left_str</b>.",
-									"image" => basename($mapImagePath)
+									"image" => $mapImagePath
 								), [$mapImagePath]);
 								return $response;
 							} else {
@@ -181,7 +181,7 @@ class Santa extends Service
 								$response->setResponseSubject('Santa no ha llegado a tu localidad');
 								$response->createFromTemplate('basic.tpl', array(
 									'message' => "$msg_rand. Llegar&eacute; a tu provincia en <b>$time_left_str</b>.",
-									"image" => basename($mapImagePath)
+									"image" => $mapImagePath
 								), [$mapImagePath]);
 								return $response;
 							}
@@ -193,7 +193,7 @@ class Santa extends Service
 							$response->setResponseSubject('Santa ha llegado a tu provincia');
 							$response->createFromTemplate('basic.tpl', array(
 								'message' => "Estoy en tu provincia !!!. $msg_rand. ",
-								"image" => basename($mapImagePath)
+								"image" => $mapImagePath
 							), [$mapImagePath]);
 							return $response;
 						}
@@ -204,7 +204,7 @@ class Santa extends Service
 							$response->setResponseSubject('Santa se ha ido de tu localidad');
 							$response->createFromTemplate('basic.tpl', array(
 								'message' => "Me he ido de tu localidad para repartir regalos a los dem&aacute;s ni&ntilde;os !!!. $msg_rand. ",
-								"image" => basename($mapImagePath)
+								"image" => $mapImagePath
 							), [$mapImagePath]);
 							return $response;
 						}
@@ -219,12 +219,15 @@ class Santa extends Service
 		{
 			$response = new Response();
 			$response->setResponseSubject("Santa ha regresado a su casa en el Polo Norte");
+			$imgPath = $this->pathToService."/image/go.jpg";
 			$response->createFromTemplate("basic.tpl", array(
 				"message" => "Regres&eacute; a mi casa en el Polo Norte hasta las pr&oacute;ximas navidades !!!.",
-				"image" => "go.jpg",
-			), [$this->pathToService."/image/go.jpg"]);
+				"image" => $imgPath,
+			), [$imgPath]);
 			return $response;
 		}
+
+
 
 		// Es antes de navidad
 		$datetime1 = new DateTime($today);
@@ -233,10 +236,13 @@ class Santa extends Service
 		$dias = $interval->format('%a');
 		$response = new Response();
 		$response->setResponseSubject("Santa no ha partido de su casa en el Polo Norte");
+		
+		$imgPath = $this->pathToService."/image/sleeping.jpg";
+
 		$response->createFromTemplate('basic.tpl', array(
 			"message" => "Estoy durmiendo en mi casa en el Polo Norte. ". (($dias > 1)?"Faltan $dias dias para navidad !!!":"Ma&ntilde;ana ser&aacute; navidad !!!"),
-			"image" => "sleeping.jpg",
-		), [$this->pathToService."/image/sleeping.jpg"]);
+			"image" => $imgPath,
+		), [$imgPath]);
 
 		return $response;
 	}
