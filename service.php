@@ -125,8 +125,7 @@ class Santa extends Service
 
 							$oStaticMap->setMarker($marker);
 						}
-						else
-							$oStaticMap->setCenter(html_entity_decode($stop->name)." ".html_entity_decode($stop->country));
+						else $oStaticMap->setCenter(html_entity_decode($stop->name)." ".html_entity_decode($stop->country));
 
 						// get path to the www folder
 						$di = \Phalcon\DI\FactoryDefault::getDefault();
@@ -136,9 +135,6 @@ class Santa extends Service
 						$content = file_get_contents($oStaticMap);
 						$mapImagePath = "$www_root/temp/" . $this->utils->generateRandomHash() . ".png";
 						imagepng(imagecreatefromstring($content), $mapImagePath);
-
-						// optimize the png image
-						$this->utils->optimizeImage($mapImagePath, 300);
 
 						$city =  str_replace("_", " ", $stop->name);
 

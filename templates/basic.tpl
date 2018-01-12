@@ -6,8 +6,6 @@
 	<i>{$message}</i>
 	{space5}
 	{img src="{$image}" alt="santa" width="100%"}
-
 	{space5}
-
 	{button href="SANTA" caption="Saber de Santa" size="medium"}
 </center>
