@@ -10,9 +10,33 @@
  */
 class Santa extends Service
 {
+	public function getTop50 (){
+		// top 50 usuarios
+		$sqlTop = " SELECT person.username, person.first_name, person.last_name, subq2.total
+ 				  	FROM (
+	                    SELECT subq.id_person, count(*) as total 
+	                    FROM (
+							SELECT id_person, date(request_date) as fecha 
+							FROM delivery 
+							WHERE year(request_date) = ".date('Y') ."
+								AND month(request_date) = 12
+							GROUP BY id_person, fecha) subq
+						GROUP BY subq.id_person
+						ORDER BY total desc
+						LIMIT 50) subq2 
+					INNER JOIN person 
+					ON person.id = subq2.id_person";
+
+		$top50 = Connection::query($sqlTop);
+		if (is_array($top50)) return $top50;
+		return [];
+	}
+
 	public function _main(Request $request)
 	{
 		date_default_timezone_set("America/New_York");
+
+		$top50 = $this->getTop50();
 
 		// init variables
 		$year = date('Y');
@@ -59,8 +83,7 @@ class Santa extends Service
 			foreach ($provs as $item) {
 				if (strtolower($item) == strtolower($prov)) {
 					// update profile
-					$connection = new Connection();
-					$connection->deepQuery("UPDATE person SET province = '$item' WHERE email = '{$person->email}';");
+					Connection::query("UPDATE person SET province = '$item' WHERE email = '{$person->email}';");
 					$person->province = $item;
 					break;
 				}
@@ -169,15 +192,18 @@ class Santa extends Service
 								$response->setResponseSubject('Santa no ha llegado a tu provincia');
 								$response->createFromTemplate('basic.tpl', array(
 									'message' => "$msg_rand. Llegar&eacute; a tu provincia en <b>$time_left_str</b>.",
-									"image" => $mapImagePath
+									"image" => $mapImagePath,
+									'top50' => $top50
 								), [$mapImagePath]);
+
 								return $response;
 							} else {
 								$response = new Response();
 								$response->setResponseSubject('Santa no ha llegado a tu localidad');
 								$response->createFromTemplate('basic.tpl', array(
 									'message' => "$msg_rand. Llegar&eacute; a tu provincia en <b>$time_left_str</b>.",
-									"image" => $mapImagePath
+									"image" => $mapImagePath,
+									'top50' => $top50
 								), [$mapImagePath]);
 								return $response;
 							}
@@ -189,7 +215,8 @@ class Santa extends Service
 							$response->setResponseSubject('Santa ha llegado a tu provincia');
 							$response->createFromTemplate('basic.tpl', array(
 								'message' => "Estoy en tu provincia !!!. $msg_rand. ",
-								"image" => $mapImagePath
+								"image" => $mapImagePath,
+								'top50' => $top50
 							), [$mapImagePath]);
 							return $response;
 						}
@@ -200,7 +227,8 @@ class Santa extends Service
 							$response->setResponseSubject('Santa se ha ido de tu localidad');
 							$response->createFromTemplate('basic.tpl', array(
 								'message' => "Me he ido de tu localidad para repartir regalos a los dem&aacute;s ni&ntilde;os !!!. $msg_rand. ",
-								"image" => $mapImagePath
+								"image" => $mapImagePath,
+								'top50' => $top50
 							), [$mapImagePath]);
 							return $response;
 						}
@@ -219,11 +247,10 @@ class Santa extends Service
 			$response->createFromTemplate("basic.tpl", array(
 				"message" => "Regres&eacute; a mi casa en el Polo Norte hasta las pr&oacute;ximas navidades !!!.",
 				"image" => $imgPath,
+				'top50' => $top50
 			), [$imgPath]);
 			return $response;
 		}
-
-
 
 		// Es antes de navidad
 		$datetime1 = new DateTime($today);
@@ -236,8 +263,9 @@ class Santa extends Service
 		$imgPath = $this->pathToService."/image/sleeping.jpg";
 
 		$response->createFromTemplate('basic.tpl', array(
-			"message" => "Estoy durmiendo en mi casa en el Polo Norte. ". (($dias > 1)?"Faltan $dias dias para navidad !!!":"Ma&ntilde;ana ser&aacute; navidad !!!"),
+			"message" => "Estoy durmiendo en mi casa en el Polo Norte. ". (($dias > 1) ? "Faltan $dias dias para navidad !!!":"Ma&ntilde;ana ser&aacute; navidad !!!"),
 			"image" => $imgPath,
+			'top50' => $top50
 		), [$imgPath]);
 
 		return $response;
