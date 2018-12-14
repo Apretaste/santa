@@ -9,11 +9,11 @@
 	{space5}
 	<table cellspacing="0" cellpadding="10" border="0" width="100%">
 		<h3>Usuarios m&aacute;s asiduos</h3>
-		<tr><th>Usuario</th><th>Cantidad de accesos</th></tr>
+		<tr><th align="left">Usuario</th><th align="right">Total de d&iacute;as accediendo</th></tr>
         {foreach from=$top50 item=person}
 			<tr {if $person@iteration is odd}style="background-color:#F2F2F2;"{/if}>
 				<td>{link href="PERFIL {$person->username}" caption="{$person->first_name} {$person->last_name} (@{$person->username})"}</td>
-				<td width="50">{$person->total}</td>
+				<td align="right" width="50">{$person->total}</td>
 			</tr>
         {/foreach}
 	</table>
