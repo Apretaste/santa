@@ -17,7 +17,7 @@
         <% for(var i=0; i < top50.length; i++) { var person = top50[i]; %>
 			<tr>
 				<td>
-					<a href="#!" onclick="apretaste.send({command: 'PERFIL', data:{query: '<%= person.username %>'}});">
+					<a href="#!" onclick="apretaste.send({command: 'PERFIL', data:{username: '<%= person.username %>'}});">
 						<%= person.first_name %> <%= person.last_name %> (@<%= person.username %>) %>
 					</a>
 				</td>
