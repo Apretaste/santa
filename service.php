@@ -1,5 +1,7 @@
 <?php
 
+use Apretaste\Model\Person;
+
 /**
  * Apretaste!
  *
@@ -60,10 +62,10 @@ class Service {
 		$hora = date('G');
 
 		// get user profile
-		$person = $this->utils->getPerson($request->email);
+		$person = Person::find($request->email);
 
 		// load santa tracker
-		$santa_stops = json_decode(file_get_contents($this->pathToService."/santa_stops.json"));
+		$santa_stops = json_decode(file_get_contents(__DIR__."/santa_stops.json"));
 		$santa_stops = $santa_stops->stops;
 
 		// provinces dictionary
@@ -134,12 +136,12 @@ class Service {
 					if ($minutos >= $min_from && $minutos <= $min_to) {
 
 						// include google maps library
-						require_once "{$this->pathToService}/lib/GoogleStaticMap.php";
-						require_once "{$this->pathToService}/lib/GoogleStaticMapFeature.php";
-						require_once "{$this->pathToService}/lib/GoogleStaticMapFeatureStyling.php";
-						require_once "{$this->pathToService}/lib/GoogleStaticMapMarker.php";
-						require_once "{$this->pathToService}/lib/GoogleStaticMapPath.php";
-						require_once "{$this->pathToService}/lib/GoogleStaticMapPathPoint.php";
+						require_once __DIR__."/lib/GoogleStaticMap.php";
+						require_once __DIR__."/lib/GoogleStaticMapFeature.php";
+						require_once __DIR__."/lib/GoogleStaticMapFeatureStyling.php";
+						require_once __DIR__."/lib/GoogleStaticMapMarker.php";
+						require_once __DIR__."/lib/GoogleStaticMapPath.php";
+						require_once __DIR__."/lib/GoogleStaticMapPathPoint.php";
 
 						$oStaticMap = new GoogleStaticMap();
 						$oStaticMap->setScale(1);
@@ -168,7 +170,7 @@ class Service {
 
 						// save image as a png file
 						$content = file_get_contents($oStaticMap);
-						$mapImagePath = "$www_root/temp/".$this->utils->generateRandomHash().".png";
+						$mapImagePath = "$www_root/temp/".Utils::generateRandomHash().".png";
 						imagepng(imagecreatefromstring($content), $mapImagePath);
 
 						$city = str_replace("_", " ", $stop->name);
