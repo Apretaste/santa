@@ -62,7 +62,7 @@ class Service {
 		$hora = date('G');
 
 		// get user profile
-		$person = Person::find($request->email);
+		$person = Person::find($request->person->email);
 
 		// load santa tracker
 		$santa_stops = json_decode(file_get_contents(__DIR__."/santa_stops.json"));
@@ -82,7 +82,7 @@ class Service {
 
 		// user has no province in their profile
 		if (empty($person->province)) {
-			$prov = str_replace(' ', '_', trim($request->query));
+			$prov = str_replace(' ', '_', trim($request->input->data->query));
 			while (strpos($prov, '__')!==false)
 				$prov = str_replace('__', '_', $prov);
 
