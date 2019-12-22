@@ -1,0 +1,35 @@
+<div class="row">
+	<div class="col s12 l12 m12 x12">
+		<h2>&iquest;Qu&eacute; hace Santa?</h2>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col s12 l12 m12 x12">
+
+		<i><%= message %></i>
+
+	<img src="{{APP_IMAGE_PATH}}/<%= image %>" alt="santa" width="100%">
+
+		<h3>Usuarios m&aacute;s asiduos</h2>
+		<table cellspacing="0" cellpadding="10" border="0" width="100%">
+		<tr><th align="left">Usuario</th><th align="right">Total de d&iacute;as accediendo</th></tr>
+        <% for(var i=0; i < top50.length; i++) { var person = top50[i]; %>
+			<tr>
+				<td>
+					<a href="#!" onclick="apretaste.send({command: 'PERFIL', data:{query: '<%= person.username %>'}});">
+						<%= person.first_name %> <%= person.last_name %> (@<%= person.username %>) %>
+					</a>
+				</td>
+				<td align="right" width="50"><%= person.total %></td>
+			</tr>
+        <% } %>
+	</table>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col s12 l12 m12 x12">
+		<a class="btn" href="#!" onclick="apretaste.send({command: 'SANTA'});">Saber de Santa</a>
+	</div>
+</div>

@@ -1,6 +1,0 @@
-<service>
-	<serviceName>santa</serviceName>
-	<serviceDescription>Devuelve la ubicacion de Santa Claus, y durante navidad dice cuanto le falta a Santa para llegar a tu casa a repartir sus regalos</serviceDescription>
-	<creatorEmail>kumahavana@gmail.com</creatorEmail>
-	<serviceCategory>ocio</serviceCategory>
-</service>

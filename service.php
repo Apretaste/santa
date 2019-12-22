@@ -5,12 +5,17 @@
  *
  * Santa Service
  *
- * @author kuma <@kumahacker>
- * @version 1.0
+ * @author  kuma <@kumahacker>
+ * @version 2.0
  */
-class Santa extends Service
-{
-	public function getTop50 (){
+class Service {
+
+	/**
+	 * Top users
+	 *
+	 * @return array|mixed
+	 */
+	public function getTop50() {
 		// top 50 usuarios
 		$sqlTop = " SELECT person.username, person.first_name, person.last_name, subq2.total
  				  	FROM (
@@ -18,7 +23,7 @@ class Santa extends Service
 	                    FROM (
 							SELECT id_person, date(request_date) as fecha 
 							FROM delivery 
-							WHERE year(request_date) = ".date('Y') ."
+							WHERE year(request_date) = ".date('Y')."
 								AND month(request_date) = 12
 							GROUP BY id_person, fecha) subq
 						GROUP BY subq.id_person
@@ -29,11 +34,20 @@ class Santa extends Service
 
 		$top50 = Connection::query($sqlTop);
 		if (is_array($top50)) return $top50;
+
 		return [];
 	}
 
-	public function _main(Request $request)
-	{
+	/**
+	 * Main action
+	 *
+	 * @param \Request  $request
+	 * @param \Response $response
+	 *
+	 * @return \Response
+	 * @throws \Exception
+	 */
+	public function _main(Request $request, Response &$response) {
 		date_default_timezone_set("America/New_York");
 
 		$top50 = $this->getTop50();
@@ -41,24 +55,24 @@ class Santa extends Service
 		// init variables
 		$year = date('Y');
 		$today = date('Y-m-d');
-		$the_day = date('Y-m-d', strtotime($year . "-12-24"));
-		$end_year = date('Y-m-d', strtotime($year . "-12-31"));
+		$the_day = date('Y-m-d', strtotime($year."-12-24"));
+		$end_year = date('Y-m-d', strtotime($year."-12-31"));
 		$hora = date('G');
 
 		// get user profile
 		$person = $this->utils->getPerson($request->email);
 
 		// load santa tracker
-		$santa_stops = json_decode(file_get_contents($this->pathToService . "/santa_stops.json"));
+		$santa_stops = json_decode(file_get_contents($this->pathToService."/santa_stops.json"));
 		$santa_stops = $santa_stops->stops;
 
 		// provinces dictionary
-		$provs = array('PINAR_DEL_RIO', 'LA_HABANA', 'ARTEMISA', 'MAYABEQUE',
+		$provs = ['PINAR_DEL_RIO', 'LA_HABANA', 'ARTEMISA', 'MAYABEQUE',
 			'MATANZAS', 'VILLA_CLARA', 'CIENFUEGOS', 'SANCTI_SPIRITUS', 'CIEGO_DE_AVILA', 'CAMAGUEY',
 			'LAS_TUNAS', 'HOLGUIN', 'GRANMA', 'SANTIAGO_DE_CUBA', 'GUANTANAMO', 'ISLA_DE_LA_JUVENTUD'
-		);
+		];
 
-		$synon = array();
+		$synon = [];
 		foreach ($provs as $v) {
 			$v = str_replace('_', ' ', $v);
 			$synon[$v] = $v;
@@ -67,21 +81,20 @@ class Santa extends Service
 		// user has no province in their profile
 		if (empty($person->province)) {
 			$prov = str_replace(' ', '_', trim($request->query));
-			while (strpos($prov, '__') !== false)
+			while (strpos($prov, '__')!==false)
 				$prov = str_replace('__', '_', $prov);
 
 			if (empty($prov)) {
-				$response = new Response();
-				$response->setResponseSubject("Santa no sabe donde vives");
-				$response->createFromTemplate("need_province.tpl", [
+				$response->setTemplate("need_province.ejs", [
 					"person" => $person,
-					"list" => $synon
+					"list"   => $synon
 				]);
+
 				return $response;
 			}
 
 			foreach ($provs as $item) {
-				if (strtolower($item) == strtolower($prov)) {
+				if (strtolower($item)==strtolower($prov)) {
 					// update profile
 					Connection::query("UPDATE person SET province = '$item' WHERE email = '{$person->email}';");
 					$person->province = $item;
@@ -91,7 +104,7 @@ class Santa extends Service
 		}
 
 		// Es navidad
-		if ($today == $the_day) {
+		if ($today==$the_day) {
 			$user_pos = 9999;
 			$user_stop = null;
 			$user_hour = null;
@@ -99,8 +112,8 @@ class Santa extends Service
 
 			$i = 0;
 			foreach ($santa_stops as $stop) {
-				if ($stop->country == 'Cuba')
-					if ($stop->name == $person->province) {
+				if ($stop->country=='Cuba')
+					if ($stop->name==$person->province) {
 						$user_pos = $i;
 						$user_stop = $stop;
 						$user_hour = $user_stop->hour;
@@ -112,7 +125,7 @@ class Santa extends Service
 
 			$i = 0;
 			foreach ($santa_stops as $stop) {
-				if ($stop->hour == $hora) {
+				if ($stop->hour==$hora) {
 					$minutos = date('i');
 					$arr = explode('-', $stop->minutes);
 					$min_from = intval($arr[0]);
@@ -137,18 +150,17 @@ class Santa extends Service
 						$oStaticMap->setMapType('hybrid');
 						$oStaticMap->setZoom(14);
 
-						if ($stop->country == 'Cuba') {
+						if ($stop->country=='Cuba') {
 							$oStaticMap->setCenter("{$stop->lat},{$stop->long}");
 							$marker = new GoogleStaticMapMarker([
-								"color" => "FF0000",
-								"label" => "Santa",
-								"latitude" => $stop->lat,
+								"color"     => "FF0000",
+								"label"     => "Santa",
+								"latitude"  => $stop->lat,
 								"longitude" => $stop->long
 							]);
 
 							$oStaticMap->setMarker($marker);
-						}
-						else $oStaticMap->setCenter(html_entity_decode($stop->name)." ".html_entity_decode($stop->country));
+						} else $oStaticMap->setCenter(html_entity_decode($stop->name)." ".html_entity_decode($stop->country));
 
 						// get path to the www folder
 						$di = \Phalcon\DI\FactoryDefault::getDefault();
@@ -156,10 +168,10 @@ class Santa extends Service
 
 						// save image as a png file
 						$content = file_get_contents($oStaticMap);
-						$mapImagePath = "$www_root/temp/" . $this->utils->generateRandomHash() . ".png";
+						$mapImagePath = "$www_root/temp/".$this->utils->generateRandomHash().".png";
 						imagepng(imagecreatefromstring($content), $mapImagePath);
 
-						$city =  str_replace("_", " ", $stop->name);
+						$city = str_replace("_", " ", $stop->name);
 
 						// generate random santa's message
 						$messages = [
@@ -173,7 +185,7 @@ class Santa extends Service
 							"Espero que {$person->full_name} est&eacute; durmiendo porque estoy muy gordo para salir corriendo por todo {$city}"
 						];
 
-						$msg_rand = $messages[mt_rand(0,count($messages)-1)];
+						$msg_rand = $messages[mt_rand(0, count($messages) - 1)];
 
 						// santa no ha llegado
 						if ($user_pos > $i) {
@@ -184,52 +196,51 @@ class Santa extends Service
 								$time_left = ($user_hour * 60 + $user_minute) - ($now_hour * 60 + $minutos);
 								$hours_left = intval($time_left / 60);
 								$min_left = $time_left - $hours_left * 60;
-								$time_left_str = ($hours_left > 0?"$hours_left horas y ":"")."$min_left minutos";
+								$time_left_str = ($hours_left > 0 ? "$hours_left horas y ":"")."$min_left minutos";
 							}
 
-							if ($stop->country == 'Cuba') {
-								$response = new Response();
-								$response->setResponseSubject('Santa no ha llegado a tu provincia');
-								$response->createFromTemplate('basic.tpl', array(
+							if ($stop->country=='Cuba') {
+								$response->setTemplate('basic.ejs', [
+									'title' => 'Santa no ha llegado a tu provincia',
 									'message' => "$msg_rand. Llegar&eacute; a tu provincia en <b>$time_left_str</b>.",
-									"image" => $mapImagePath,
-									'top50' => $top50
-								), [$mapImagePath]);
+									"image"   => $mapImagePath,
+									'top50'   => $top50
+								], [$mapImagePath]);
 
 								return $response;
 							} else {
-								$response = new Response();
-								$response->setResponseSubject('Santa no ha llegado a tu localidad');
-								$response->createFromTemplate('basic.tpl', array(
+								$response->setTemplate('basic.ejs', [
+									'title' => 'Santa no ha llegado a tu localidad',
 									'message' => "$msg_rand. Llegar&eacute; a tu provincia en <b>$time_left_str</b>.",
-									"image" => $mapImagePath,
-									'top50' => $top50
-								), [$mapImagePath]);
+									"image"   => $mapImagePath,
+									'top50'   => $top50
+								], [$mapImagePath]);
+
 								return $response;
 							}
 						}
 
 						// santa esta aqui
-						if ($user_pos == $i) {
-							$response = new Response();
-							$response->setResponseSubject('Santa ha llegado a tu provincia');
-							$response->createFromTemplate('basic.tpl', array(
+						if ($user_pos==$i) {
+							$response->setTemplate('basic.ejs', [
+								'title' => 'Santa ha llegado a tu provincia',
 								'message' => "Estoy en tu provincia !!!. $msg_rand. ",
-								"image" => $mapImagePath,
-								'top50' => $top50
-							), [$mapImagePath]);
+								"image"   => $mapImagePath,
+								'top50'   => $top50
+							], [$mapImagePath]);
+
 							return $response;
 						}
 
 						// santa se ha ido
 						if ($user_pos < $i) {
-							$response = new Response();
-							$response->setResponseSubject('Santa se ha ido de tu localidad');
-							$response->createFromTemplate('basic.tpl', array(
+							$response->setTemplate('basic.tpl', [
+								'title' => 'Santa se ha ido de tu localidad',
 								'message' => "Me he ido de tu localidad para repartir regalos a los dem&aacute;s ni&ntilde;os !!!. $msg_rand. ",
-								"image" => $mapImagePath,
-								'top50' => $top50
-							), [$mapImagePath]);
+								"image"   => $mapImagePath,
+								'top50'   => $top50
+							], [$mapImagePath]);
+
 							return $response;
 						}
 					}
@@ -239,16 +250,15 @@ class Santa extends Service
 		}
 
 		// Si es despues de navidad o ya paso por todas las ciudades (no se dio return en el ciclo anterior)
-		if (($today == $the_day && $hora >= $santa_stops[0]->hour) || ($today > $the_day && $today <= $end_year))
-		{
-			$response = new Response();
-			$response->setResponseSubject("Santa ha regresado a su casa en el Polo Norte");
-			$imgPath = $this->pathToService."/image/go.jpg";
-			$response->createFromTemplate("basic.tpl", array(
+		if (($today==$the_day && $hora >= $santa_stops[0]->hour) || ($today > $the_day && $today <= $end_year)) {
+			$imgPath = __DIR__."/image/go.jpg";
+			$response->setTemplate("basic.ejs", [
+				"title" => "Santa ha regresado a su casa en el Polo Norte",
 				"message" => "Regres&eacute; a mi casa en el Polo Norte hasta las pr&oacute;ximas navidades !!!.",
-				"image" => $imgPath,
-				'top50' => $top50
-			), [$imgPath]);
+				"image"   => $imgPath,
+				'top50'   => $top50
+			], [$imgPath]);
+
 			return $response;
 		}
 
@@ -257,16 +267,14 @@ class Santa extends Service
 		$datetime2 = new DateTime($the_day);
 		$interval = $datetime2->diff($datetime1);
 		$dias = $interval->format('%a');
-		$response = new Response();
-		$response->setResponseSubject("Santa no ha partido de su casa en el Polo Norte");
-		
-		$imgPath = $this->pathToService."/image/sleeping.jpg";
+		$imgPath = __DIR__."/image/sleeping.jpg";
 
-		$response->createFromTemplate('basic.tpl', array(
-			"message" => "Estoy durmiendo en mi casa en el Polo Norte. ". (($dias > 1) ? "Faltan $dias dias para navidad !!!":"Ma&ntilde;ana ser&aacute; navidad !!!"),
-			"image" => $imgPath,
-			'top50' => $top50
-		), [$imgPath]);
+		$response->setTemplate('basic.ejs', [
+			"title" => "Santa no ha partido de su casa en el Polo Norte",
+			"message" => "Estoy durmiendo en mi casa en el Polo Norte. ".(($dias > 1) ? "Faltan $dias dias para navidad !!!":"Ma&ntilde;ana ser&aacute; navidad !!!"),
+			"image"   => $imgPath,
+			'top50'   => $top50
+		], [$imgPath]);
 
 		return $response;
 	}

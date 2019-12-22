@@ -1,0 +1,15 @@
+<div class="row">
+	<div class="col s12 l12 m12 x12">
+		<h1>Santa no sabe donde vive</h1>
+	</div>
+</div>
+<div class="row">
+	<div class="col s12 l12 m12 x12">
+		<p>Para llegar a tu casa Santa necesita saber donde queda, pero no tienes puesta una provincia en tu perfil. Haz click en tu provinca y le diremos a Santa. Con esta acci&oacute;n tu perfil ser&aacute; actualizado.</p>
+		<ul>
+			<% for(var i=0; i< list.length; i++) { var item = list[i]; %>
+			<li><a href="#!" onclick="apretaste.send({command: 'SANTA <%= item %>'});"><%= item %></a></li>
+			<% } %>
+		</ul>
+	</div>
+</div>

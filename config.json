@@ -1,0 +1,8 @@
+{
+	"name": "santa",
+	"version": 2,
+	"description": "Devuelve la ubicacion de Santa Claus, y durante navidad dice cuanto le falta a Santa para llegar a tu casa a repartir sus regalos",
+	"category": "ocio",
+	"creator": "kumahavana@gmail.com",
+	"listed": true
+}
