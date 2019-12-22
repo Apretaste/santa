@@ -11,7 +11,7 @@
 
 	<img src="{{APP_IMAGE_PATH}}/<%= image %>" alt="santa" width="100%">
 
-		<h3>Usuarios m&aacute;s asiduos</h2>
+		<h3>Usuarios m&aacute;s asiduos</h3>
 		<table cellspacing="0" cellpadding="10" border="0" width="100%">
 		<tr><th align="left">Usuario</th><th align="right">Total de d&iacute;as accediendo</th></tr>
         <% for(var i=0; i < top50.length; i++) { var person = top50[i]; %>
@@ -28,8 +28,8 @@
 	</div>
 </div>
 
-<div class="row">
-	<div class="col s12 l12 m12 x12">
-		<a class="btn" href="#!" onclick="apretaste.send({command: 'SANTA'});">Saber de Santa</a>
-	</div>
+<div class="fixed-action-btn">
+	<a class="btn-floating btn-large green">
+		<a class="btn" href="#!" onclick="apretaste.send({command: 'SANTA'});"><i class="large material-icons">refresh</i></a>
+	</a>
 </div>
