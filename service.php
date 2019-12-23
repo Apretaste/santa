@@ -151,8 +151,9 @@ class Service {
 						$oStaticMap->setHttps(true);
 						$oStaticMap->setMapType('hybrid');
 						$oStaticMap->setZoom(14);
+						$oStaticMap->setAPIKey("");
 
-						if ($stop->country=='Cuba') {
+;						if ($stop->country=='Cuba') {
 							$oStaticMap->setCenter("{$stop->lat},{$stop->long}");
 							$marker = new GoogleStaticMapMarker([
 								"color"     => "FF0000",
@@ -169,8 +170,9 @@ class Service {
 						$www_root = $di->get('path')['root'];
 
 						// save image as a png file
-						$content = file_get_contents($oStaticMap);
-						$mapImagePath = "$www_root/temp/".Utils::generateRandomHash().".png";
+						$content = Utils::file_get_contents_curl("https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/{$stop->lat},{$stop->long},9.67,0.00,0.00/500x500@2x?access_token=pk.eyJ1Ijoia3VtYWhhY2tlciIsImEiOiJjazRpdzFodHMxcGJ4M25vNmhjdmJqbWF4In0.lhItxwxxV3021-D9rj3u0A");
+						//$content = file_get_contents($oStaticMap);
+						$mapImagePath = "$www_root/shared/tmp/".Utils::generateRandomHash().".png";
 						imagepng(imagecreatefromstring($content), $mapImagePath);
 
 						$city = str_replace("_", " ", $stop->name);
