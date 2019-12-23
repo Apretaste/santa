@@ -151,7 +151,7 @@ class Service {
 						$oStaticMap->setHttps(true);
 						$oStaticMap->setMapType('hybrid');
 						$oStaticMap->setZoom(14);
-						$oStaticMap->setAPIKey("");
+						//$oStaticMap->setAPIKey("");
 
 ;						if ($stop->country=='Cuba') {
 							$oStaticMap->setCenter("{$stop->lat},{$stop->long}");
