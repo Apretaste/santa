@@ -182,7 +182,7 @@ class Service {
 						$messages = [
 							"Le estoy dando zanahorias a Rodolfo en la ciudad de {$city} en {$stop->country}, el pobre ha pasado hambre desde el Polo Norte!!!",
 							"Santa est&aacute; comiendo galletas de {$stop->country}, que le regalaron en {$city}",
-							"Uff que fr&iacute;o hace aqu&iacute; arriba en {$city}. Ojal&aacute; que {$person->full_name} me haya dejado chocolate caliente de {$stop->country}!!!",
+							"Uff que fr&iacute;o hace aqu&iacute; arriba en {$city}. Ojal&aacute; que @{$person->username} me haya dejado chocolate caliente de {$stop->country}!!!",
 							"Mi esposa le hizo esta bufanda especialmente a @{$person->username}, y espero que le guste mucho. Estoy llegando a {$city}  :)",
 							"Me encanta venir a {$city} porque siempre me dejan mucha comida.",
 							"Cargar este saco lleno de regalos por todo {$city} me dejar&aacute; tremendo dolor en la espalda!!!",
