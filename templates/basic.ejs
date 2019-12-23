@@ -13,15 +13,15 @@
 
 		<h3>Usuarios m&aacute;s asiduos</h3>
 		<table cellspacing="0" cellpadding="10" border="0" width="100%">
-		<tr><th align="left">Usuario</th><th align="right">Total de d&iacute;as accediendo</th></tr>
+		<tr><th align="left">Usuario</th><th align="right">Visitas</th></tr>
         <% for(var i=0; i < top50.length; i++) { var person = top50[i]; %>
 			<tr>
 				<td>
 					<a href="#!" onclick="apretaste.send({command: 'PERFIL', data:{username: '<%= person.username %>'}});">
-						<%= person.first_name %> <%= person.last_name %> (@<%= person.username %>) %>
+						@<%= person.username %> %>
 					</a>
 				</td>
-				<td align="right" width="50"><%= person.total %></td>
+				<td align="center" width="50"><%= person.total %></td>
 			</tr>
         <% } %>
 	</table>

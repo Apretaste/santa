@@ -183,11 +183,11 @@ class Service {
 							"Le estoy dando zanahorias a Rodolfo en la ciudad de {$city} en {$stop->country}, el pobre ha pasado hambre desde el Polo Norte!!!",
 							"Santa est&aacute; comiendo galletas de {$stop->country}, que le regalaron en {$city}",
 							"Uff que fr&iacute;o hace aqu&iacute; arriba en {$city}. Ojal&aacute; que {$person->full_name} me haya dejado chocolate caliente de {$stop->country}!!!",
-							"Mi esposa le hizo esta bufanda especialmente a {$person->full_name}, y espero que le guste mucho. Estoy llegando a {$city}  :)",
+							"Mi esposa le hizo esta bufanda especialmente a @{$person->username}, y espero que le guste mucho. Estoy llegando a {$city}  :)",
 							"Me encanta venir a {$city} porque siempre me dejan mucha comida.",
 							"Cargar este saco lleno de regalos por todo {$city} me dejar&aacute; tremendo dolor en la espalda!!!",
 							"&iquest;Dónde habr&aacute; algo de leche fr&iacute;a en {$city}?",
-							"Espero que {$person->full_name} est&eacute; durmiendo porque estoy muy gordo para salir corriendo por todo {$city}"
+							"Espero que @{$person->username} est&eacute; durmiendo porque estoy muy gordo para salir corriendo por todo {$city}"
 						];
 
 						$msg_rand = $messages[mt_rand(0, count($messages) - 1)];
