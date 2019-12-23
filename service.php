@@ -172,7 +172,7 @@ class Service {
 						// save image as a png file
 						//$content = Utils::file_get_contents_curl("https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/{$stop->lat},{$stop->long},9.67,0.00,0.00/500x500@2x?access_token=pk.eyJ1Ijoia3VtYWhhY2tlciIsImEiOiJjazRpdzFodHMxcGJ4M25vNmhjdmJqbWF4In0.lhItxwxxV3021-D9rj3u0A");
 						//$content = file_get_contents($oStaticMap);
-						$content = Utils::file_get_contents_curl("https://www.mapquestapi.com/staticmap/v5/map?key=Ut3gS9mkk5cmm8gcaynC3dykGc7eA2gu&center={$stop->lat},{$stop->long}&traffic=flow|cons|inc&size=300,300@2x");
+						$content = Utils::file_get_contents_curl("https://www.mapquestapi.com/staticmap/v5/map?key=Ut3gS9mkk5cmm8gcaynC3dykGc7eA2gu&center={$stop->lat},{$stop->long}&traffic=flow|cons|inc&size=300,300@2x&locations={$stop->lat},{$stop->long}");
 						$mapImagePath = "$www_root/shared/tmp/".Utils::generateRandomHash().".png";
 						imagepng(imagecreatefromstring($content), $mapImagePath);
 
