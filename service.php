@@ -19,20 +19,20 @@ class Service {
 	 */
 	public function getTop50() {
 		// top 50 usuarios
-		$sqlTop = " SELECT person.username, person.first_name, person.last_name, subq.total
+		/*$sqlTop = " SELECT person.username, person.first_name, person.last_name, subq.total
  				  	FROM (
-							SELECT id_person, count(*) as total 
-							FROM delivery 
+							SELECT id_person, count(*) as total
+							FROM delivery
 							WHERE date(request_date) >= '".date('Y')."-12-01'
 							GROUP BY id_person
 							ORDER BY total desc
 							LIMIT 50) subq
-					INNER JOIN person 
+					INNER JOIN person
 					ON person.id = subq.id_person";
 
 		$top50 = Connection::query($sqlTop);
 		if (is_array($top50)) return $top50;
-
+*/
 		return [];
 	}
 
