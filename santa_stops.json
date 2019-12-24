@@ -148,8 +148,8 @@
       "minutes": "31-59",
       "name" : "Illinois",
       "country" : "USA",
-      "lat" : 39.6611311,
-      "long" : -93.9969731,
+      "lat" : 40.667915,
+      "long" : -89.581553,
       "time_zone": 0,
       "code": "0",
 	  "message": ""
@@ -159,8 +159,8 @@
       "minutes": "0-30",
       "name" : "Kentucky",
       "country" : "USA",
-      "lat" : 37.8053491,
-      "long" : -88.0122994,
+      "lat" : 37.673985,
+      "long" : -85.850577,
       "time_zone": 0,
       "code": "0",
 	  "message": ""
