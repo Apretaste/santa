@@ -115,8 +115,8 @@
       "minutes": "0-30",
       "name" : "Groenlandia",
       "country" : "Groenlandia",
-      "lat" : 61.4938353,
-      "long" : -55.1075416,
+      "lat" : 60.195470,
+      "long" : -44.589931,
       "time_zone": 0,
       "code": "0",
 	  "message": ""
@@ -126,8 +126,8 @@
       "minutes": "0-59",
       "name" : "Toronto",
       "country" : "Canad&aacute;",
-      "lat" : 50.8464613,
-      "long" : -130.235056,
+      "lat" : 43.650962,
+      "long" : -79.386929,
       "time_zone": 0,
       "code": "0",
 	  "message": ""
@@ -137,8 +137,8 @@
       "minutes": "0-30",
       "name" : "Michigan",
       "country" : "USA",
-      "lat" : 44.8632388,
-      "long" : -90.9065791,
+      "lat" : 42.305689,
+      "long" : -83.162330,
       "time_zone": 0,
       "code": "0",
 	  "message": ""
