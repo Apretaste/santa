@@ -188,7 +188,7 @@ class Service {
 							"Cargar este saco lleno de regalos por todo {$city} me dejar&aacute; tremendo dolor en la espalda!!!",
 							"&iquest;Dónde habr&aacute; algo de leche fr&iacute;a en {$city}?",
 							"Espero que @{$person->username} est&eacute; durmiendo porque estoy muy gordo para salir corriendo por todo {$city}",
-							"Asere, estoy contento de estar cerca de ti y para celebrarlo te regalo este cupón: PAZ y gana 1 de crédito... Mientras tanto, sigo a las otras provincias."
+							"Estoy contento de estar cerca de ti y para celebrarlo te regalo este cupón: PAZ y gana 1 de crédito... Mientras tanto, sigo a las otras provincias."
 						];
 
 						$msg_rand = $messages[mt_rand(0, count($messages) - 1)];
