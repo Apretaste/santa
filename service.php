@@ -78,7 +78,10 @@ class Service {
 
 		// user has no province in their profile
 		if (empty($person->province)) {
-			$prov = str_replace(' ', '_', trim($request->input->data->query));
+			$q = $request->input->data->query ?? null;
+			$q = $q === null ? ($request->input->data->province ?? null) : null;
+
+			$prov = str_replace(' ', '_', trim($q));
 			while (strpos($prov, '__')!==false)
 				$prov = str_replace('__', '_', $prov);
 
