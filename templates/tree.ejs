@@ -1,0 +1,36 @@
+<div class="row">
+	<div class="col s12">
+		<ul class="tabs tabs-fixed-width">
+			<li class="tab"><a href="#" onclick="apretaste.send({command:'SANTA'})">Santa</a></li>
+			<li class="tab"><a href="#" class="active">Arbolito</a></li>
+			<li class="tab"><a href="#" onclick="apretaste.send({command:'SANTA REGLAS'})">Reglas</a></li>
+		</ul>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col s12 speech-bubble-wrapper">
+		<div class="speech-bubble">
+			<div class="arrow"></div>
+			<span id="message"><%= message %></span>
+		</div>
+		<div class="santa-avatar circle" style="background-image:url('{{APP_SERVICE_PATH}}/images/<%= gift.sender %>.png');"></div>
+	</div>
+
+	<div class="col s12 center">
+		<i class="fas fa-tree tree green-text"></i>
+		<% if(gift.opened == 0) { %>
+			<i class="fas fa-<%= getGiftIcon() %> fa-5x gift red-text modal-trigger" href="#giftModal" onclick="pickGift('<%= gift.id %>')"></i>
+		<% } %>
+	</div>
+</div>
+
+<!-- MODAL GIFT -->
+<div id="giftModal" class="modal">
+	<div class="modal-content">
+		<p>Abres tu regalo lleno de emoción, rasgando el papel lentamente, y encuentras <b><%= gift.caption %></b>.</p>
+	</div>
+	<div class="modal-footer">
+		<a class="modal-close waves-effect waves-green green-text btn-flat">Cerrar</a>
+	</div>
+</div>

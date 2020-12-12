@@ -1,0 +1,24 @@
+<div class="row">
+	<div class="col s12">
+		<ul class="tabs tabs-fixed-width">
+			<li class="tab"><a href="#" class="active">Santa</a></li>
+			<li class="tab"><a href="#" onclick="apretaste.send({command:'SANTA ARBOL'})">Arbolito</a></li>
+			<li class="tab"><a href="#" onclick="apretaste.send({command:'SANTA REGLAS'})">Reglas</a></li>
+		</ul>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col s12 speech-bubble-wrapper">
+		<div class="speech-bubble">
+			<div class="arrow"></div>
+			<%= message %>
+		</div>
+		<div class="santa-avatar circle" style="background-image:url('{{APP_SERVICE_PATH}}/images/santa.png');"></div>
+	</div>
+
+	<div class="col s12 center">
+		<i class="fas fa-calendar-day fa-7x green-text"> <%= days %></i>
+		<p><b>25 de Diciembre del <%= moment().format('YYYY') %></b></p>
+	</div>
+</div>
