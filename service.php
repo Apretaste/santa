@@ -249,7 +249,7 @@ class Service
 			AND opened = 0");
 
 		// do not continue for invalida data
-		if(empty($id)) return false;
+		if(empty($gift)) return false;
 
 		// apply code CREDIT_05
 		if($gift->code == "CREDIT_05") {
