@@ -104,7 +104,7 @@ class Service
 
 		// create path to image map
 		$googleMapsURL = "https://www.mapquestapi.com/staticmap/v5/map?key=Ut3gS9mkk5cmm8gcaynC3dykGc7eA2gu&center={$santaCurrentLocation->lat},{$santaCurrentLocation->long}&traffic=flow|cons|inc&size=300,300@2x&locations={$santaCurrentLocation->lat},{$santaCurrentLocation->long}";
-		$mapImagePath = TEMP_PATH . 'santa/' . md5($googleMapsURL) . ".png";
+		$mapImagePath = TEMP_PATH . 'cache/' . md5($googleMapsURL) . ".png";
 
 		// download and save image as a png file
 		if (!file_exists($mapImagePath)) {
@@ -127,9 +127,19 @@ class Service
 		// generate random santa's message
 		$randomMessage = $messages[array_rand($messages)];
 
+		// load the santa locations
+		$myProvince = $this->getProvinceData($request->person->provinceCode);
+
+		// calculate arrival time
+		$minutes = explode('-', $myProvince->minutes)[0];
+		$time_left = ($myProvince->hour * 60 + $minutes) - (date('G') * 60 + date('i'));
+		$hours_left = intval($time_left / 60);
+		$min_left = $time_left - $hours_left * 60;
+		$arrivalTime = ($hours_left > 0 ? "$hours_left horas y " : "") . "$min_left minutos";
+
 		// create content for the view
 		$content = [
-			"message" => "$randomMessage. Llegaré a tu provincia en {$santaCurrentLocation->arrivalTime}.",
+			"message" => "$randomMessage. Llegaré a tu provincia en {$arrivalTime}.",
 			"image" => basename($mapImagePath),
 		];
 
@@ -349,12 +359,6 @@ class Service
 
 			// find the location based on hour and minutes
 			if($item->hour == date('G') && date('i') >= $minFrom && date('i') <= $minTo) {
-				// calculate arrival time
-				$time_left = ($item->hour * 60 + $minTo) - (date('G') * 60 + date('i'));
-				$hours_left = intval($time_left / 60);
-				$min_left = $time_left - $hours_left * 60;
-				$item->arrivalTime = ($hours_left > 0 ? "$hours_left horas y " : "") . "$min_left minutos";
-
 				// save the current location
 				$santaCurrentLocation = $item;
 				break;
@@ -411,19 +415,35 @@ class Service
 	private function didSantaVisitMyProvince($province)
 	{
 		// load the santa locations
+		$myProvince = $this->getProvinceData($province);
+
+		// calculate the scheduling passing datetime
+		$minutes = explode('-', $myProvince->minutes);
+		$minFrom = intval($minutes[0]);
+		$scheduledVisitDate = date(date('Y') . '-12-24 ' . "{$myProvince->hour}:{$minFrom}:00");
+
+		// return if Santa already passed by your province
+		return strtotime($scheduledVisitDate) < time();
+	}
+
+	/**
+	 * Get your province
+	 * 
+	 * @param Enum $province
+	 * @return Object | false
+	 */
+	private function getProvinceData($province)
+	{
+		// load the santa locations
 		$locations = json_decode(file_get_contents(__DIR__ . "/locations.json"));
 
 		// locate your province
 		foreach ($locations as $item) {
-			if($item->province == $province) break;
+			if($item->province == $province) {
+				return $item;
+			}
 		}
 
-		// calculate the scheduling passing datetime
-		$minutes = explode('-', $item->minutes);
-		$minFrom = intval($minutes[0]);
-		$scheduledVisitDate = date(date('Y') . '-12-24 ' . "{$item->hour}:{$minFrom}:00");
-
-		// return if Santa already passed by your province
-		return strtotime($scheduledVisitDate) < time();
+		return false;
 	}
 }
