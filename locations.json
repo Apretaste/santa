@@ -109,7 +109,7 @@
 	},
 	{
 		"hour" : 14,
-		"minutes": "31-59",
+		"minutes": "0-59",
 		"name" : "Inglaterra",
 		"province" : "",
 		"country" : "Reino Unido",
@@ -121,7 +121,7 @@
 	},
 	{
 		"hour" : 15,
-		"minutes": "0-30",
+		"minutes": "0-59",
 		"name" : "Groenlandia",
 		"province" : "",
 		"country" : "Groenlandia",
@@ -349,18 +349,6 @@
 	},
 	{
 		"hour" : 22,
-		"minutes": "33-36",
-		"name" : "Sacti Espíritus",
-		"province" : "SANCTI_SPIRITUS",
-		"country" : "Cuba",
-		"lat" : 21.925,
-		"long" : -79.44192,
-		"time_zone": 4,
-		"code": "SS",
-		"message": ""
-	},
-	{
-		"hour" : 22,
 		"minutes": "29-32",
 		"name" : "Ciego de Ávila",
 		"province" : "CIEGO_DE_AVILA",
@@ -369,6 +357,18 @@
 		"long" : -78.76,
 		"time_zone": 4,
 		"code": "CA",
+		"message": ""
+	},
+	{
+		"hour" : 22,
+		"minutes": "33-36",
+		"name" : "Sacti Espíritus",
+		"province" : "SANCTI_SPIRITUS",
+		"country" : "Cuba",
+		"lat" : 21.925,
+		"long" : -79.44192,
+		"time_zone": 4,
+		"code": "SS",
 		"message": ""
 	},
 	{
